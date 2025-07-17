@@ -38,7 +38,7 @@ async function getStreams() {
   streamers.forEach(name => {
     if (onlineStreamers.includes(name.toLowerCase())) {
       const iframe = document.createElement('iframe');
-      iframe.src = `https://player.twitch.tv/?channel=${name}&parent=tuo-username.github.io`;
+      iframe.src = `https://player.twitch.tv/?channel=${name}&parent=Gamessteps.github.io`;
       iframe.allowFullscreen = true;
 
       const div = document.createElement('div');
