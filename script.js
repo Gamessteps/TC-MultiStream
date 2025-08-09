@@ -22,8 +22,8 @@ const streamers = [
   { name: "maxibinn", url: "https://www.twitch.tv/maxibinn" },
   { name: "sussosioilpazzo", url: "https://www.twitch.tv/sussosioilpazzo" },
   { name: "itzmezii", url: "https://m.twitch.tv/itzmezii/" },
-  { name: "hemlock_noir_", url: "https://www.twitch.tv/hemlock_noir_" }
-  { name: "mominillithegamer", url: "https://www.twitch.tv/Mominillithegamer" }
+  { name: "hemlock_noir_", url: "https://www.twitch.tv/hemlock_noir_" },
+  { name: "mominillithegamer", url: "https://www.twitch.tv/Mominillithegamer" },
 ];
 
 const liveContainer = document.getElementById('live-streams');
