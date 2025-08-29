@@ -11,25 +11,57 @@
       margin: 0;
       padding: 20px;
     }
-    h2 {
-      margin-bottom: 10px;
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
     }
+
+    h2 {
+      margin: 20px 0 15px;
+      text-align: center;
+    }
+
+    #live-streams {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+    }
+
     #live-streams iframe {
       width: 400px;
       height: 225px;
-      margin: 10px;
       border: none;
-      border-radius: 8px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
     }
+
+    /* Lista offline più carina */
+    #offline-streamers {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 15px;
+    }
+
     #offline-streamers a {
-      display: block;
+      background: #1e1e1e;
       color: #aaa;
-      margin: 5px 0;
+      padding: 8px 15px;
+      border-radius: 20px;
       text-decoration: none;
+      font-weight: 500;
+      transition: all 0.2s ease-in-out;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
     }
+
     #offline-streamers a:hover {
+      background: #9146FF;
       color: #fff;
-      text-decoration: underline;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
     }
   </style>
 </head>
