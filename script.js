@@ -14,7 +14,7 @@ const streamers = [
   { name: "poenico", url: "https://www.twitch.tv/poenico" },
   { name: "subbo_00", url: "https://www.twitch.tv/subbo_00" },
   { name: "blazecube_21", url: "https://www.twitch.tv/blazecube_21" },
-  { name: "nocturniverse", url: "https://www.twitch.tv/nocturniverse" }, // lolller & Just a Chill Guy
+  { name: "nocturniverse", url: "https://www.twitch.tv/nocturniverse" },
   { name: "d3struct10ntv", url: "https://www.twitch.tv/d3struct10ntv" },
   { name: "noluuke", url: "https://www.twitch.tv/noluuke" },
   { name: "keenzoo__", url: "https://www.twitch.tv/keenzoo__" },
@@ -24,10 +24,17 @@ const streamers = [
   { name: "itzmezii", url: "https://m.twitch.tv/itzmezii/" },
   { name: "hemlock_noir_", url: "https://www.twitch.tv/hemlock_noir_" },
   { name: "mominillithegamer", url: "https://www.twitch.tv/Mominillithegamer" },
+  { name: "francescoangelov", url: "https://www.twitch.tv/realfrancii" },
+  { name: "thatismose", url: "https://www.twitch.tv/thatis_killa" },
+  { name: "korxyfn", url: "https://www.twitch.tv/korxyfn" },
+  { name: "ilchrissone", url: "https://www.twitch.tv/ilchrissone" },
+  { name: "taric_one", url: "https://www.twitch.tv/taric_one" },
+  { name: "simoo", url: "https://www.twitch.tv/simoooyt" }
 ];
 
 const liveContainer = document.getElementById('live-streams');
 const offlineContainer = document.getElementById('offline-streamers');
+const counterDiv = document.getElementById('stream-counter'); // Titolo da aggiornare
 
 async function getStreams() {
   const query = streamers.map(s => `user_login=${s.name}`).join('&');
@@ -46,16 +53,17 @@ async function getStreams() {
   liveContainer.innerHTML = '';
   offlineContainer.innerHTML = '';
 
+  let onlineCount = 0;
+
   streamers.forEach(({name, url}) => {
     if (onlineStreamers.includes(name.toLowerCase())) {
-      // Online - crea iframe
+      onlineCount++;
       const iframe = document.createElement('iframe');
       iframe.src = `https://player.twitch.tv/?channel=${name}&parent=${parentDomain}`;
       iframe.allowFullscreen = true;
 
       liveContainer.appendChild(iframe);
     } else {
-      // Offline - crea link cliccabile
       const a = document.createElement('a');
       a.href = url;
       a.target = '_blank';
@@ -64,6 +72,9 @@ async function getStreams() {
       offlineContainer.appendChild(a);
     }
   });
+
+  // Aggiorna il titolo con il counter
+  counterDiv.textContent = `Streamer online: ${onlineCount} / ${streamers.length}`;
 }
 
 getStreams();
