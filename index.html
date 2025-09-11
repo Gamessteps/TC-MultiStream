@@ -29,15 +29,34 @@
       gap: 15px;
     }
 
-    #live-streams iframe {
-      width: 400px;
-      height: 225px;
-      border: none;
-      border-radius: 10px;
+    .stream-card {
+      background: #1e1e1e;
+      border-radius: 12px;
+      padding: 10px;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+      max-width: 420px;
+      width: 100%;
     }
 
-    /* Lista offline più carina */
+    .stream-card h3 {
+      margin: 0 0 8px;
+      font-size: 16px;
+      color: #9146FF;
+    }
+
+    .stream-card p {
+      margin: 0 0 10px;
+      font-size: 14px;
+      color: #ccc;
+    }
+
+    .stream-card iframe {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border: none;
+      border-radius: 8px;
+    }
+
     #offline-streamers {
       display: flex;
       flex-wrap: wrap;
@@ -55,6 +74,9 @@
       font-weight: 500;
       transition: all 0.2s ease-in-out;
       box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
 
     #offline-streamers a:hover {
@@ -63,13 +85,18 @@
       transform: translateY(-2px);
       box-shadow: 0 4px 10px rgba(0,0,0,0.5);
     }
+
+    .twitch-icon {
+      width: 16px;
+      height: 16px;
+      filter: invert(70%);
+    }
   </style>
 </head>
 <body>
   <h1>TC MultiStream</h1>
 
-  <!-- Titolo che verrà aggiornato dal JS -->
-  <h2 id="stream-counter">Live ora:</h2>
+  <h2 id="stream-counter">Caricamento in corso...</h2>
   <div id="live-streams"></div>
 
   <h2>Streamer offline:</h2>
