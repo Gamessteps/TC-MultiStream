@@ -1,5 +1,5 @@
-const clientId = '1fw8yuj9fmmw5vp9v2u5zpfiwiwesu';
-const accessToken = 'cs4sk9zml93lj88m0fxzeayf3fqc8n';
+const clientId = "INSERISCI_CLIENT_ID";
+const accessToken = "INSERISCI_ACCESS_TOKEN";
 
 const streamers = [
   { name: "ermixone_", url: "https://www.twitch.tv/ermixone_" },
@@ -32,49 +32,79 @@ const streamers = [
   { name: "simoo", url: "https://www.twitch.tv/simoooyt" }
 ];
 
-const liveContainer = document.getElementById('live-streams');
-const offlineContainer = document.getElementById('offline-streamers');
-const counterDiv = document.getElementById('stream-counter'); // Titolo da aggiornare
+const liveContainer = document.getElementById("live-streams");
+const offlineContainer = document.getElementById("offline-streamers");
+const counterDiv = document.getElementById("stream-counter");
 
 async function getStreams() {
-  const query = streamers.map(s => `user_login=${s.name}`).join('&');
-  const parentDomain = window.location.hostname;
+  try {
+    const query = streamers.map(s => `user_login=${s.name}`).join("&");
+    const parentDomain = window.location.hostname;
 
-  const response = await fetch(`https://api.twitch.tv/helix/streams?${query}`, {
-    headers: {
-      'Client-ID': clientId,
-      'Authorization': `Bearer ${accessToken}`
-    }
-  });
+    const response = await fetch(`https://api.twitch.tv/helix/streams?${query}`, {
+      headers: {
+        "Client-ID": clientId,
+        "Authorization": `Bearer ${accessToken}`
+      }
+    });
 
-  const data = await response.json();
-  const onlineStreamers = data.data.map(s => s.user_login.toLowerCase());
+    if (!response.ok) throw new Error("Errore API Twitch");
 
-  liveContainer.innerHTML = '';
-  offlineContainer.innerHTML = '';
+    const data = await response.json();
+    const onlineStreamers = data.data;
 
-  let onlineCount = 0;
+    liveContainer.innerHTML = "";
+    offlineContainer.innerHTML = "";
 
-  streamers.forEach(({name, url}) => {
-    if (onlineStreamers.includes(name.toLowerCase())) {
-      onlineCount++;
-      const iframe = document.createElement('iframe');
-      iframe.src = `https://player.twitch.tv/?channel=${name}&parent=${parentDomain}`;
-      iframe.allowFullscreen = true;
+    let onlineCount = 0;
 
-      liveContainer.appendChild(iframe);
-    } else {
-      const a = document.createElement('a');
-      a.href = url;
-      a.target = '_blank';
-      a.rel = 'noopener noreferrer';
-      a.textContent = name;
-      offlineContainer.appendChild(a);
-    }
-  });
+    streamers.forEach(({ name, url }) => {
+      const live = onlineStreamers.find(s => s.user_login.toLowerCase() === name.toLowerCase());
 
-  // Aggiorna il titolo con il counter
-  counterDiv.textContent = `Streamer online: ${onlineCount} / ${streamers.length}`;
+      if (live) {
+        onlineCount++;
+        const card = document.createElement("div");
+        card.className = "stream-card";
+
+        const title = document.createElement("h3");
+        title.textContent = live.user_name;
+
+        const game = document.createElement("p");
+        game.textContent = `${live.title} (${live.game_name})`;
+
+        const iframe = document.createElement("iframe");
+        iframe.src = `https://player.twitch.tv/?channel=${name}&parent=${parentDomain}`;
+        iframe.allowFullscreen = true;
+
+        card.appendChild(title);
+        card.appendChild(game);
+        card.appendChild(iframe);
+
+        liveContainer.appendChild(card);
+      } else {
+        const a = document.createElement("a");
+        a.href = url;
+        a.target = "_blank";
+        a.rel = "noopener noreferrer";
+
+        const icon = document.createElement("img");
+        icon.src = "https://upload.wikimedia.org/wikipedia/commons/2/26/Twitch_logo.svg";
+        icon.className = "twitch-icon";
+
+        a.appendChild(icon);
+        a.appendChild(document.createTextNode(name));
+        offlineContainer.appendChild(a);
+      }
+    });
+
+    counterDiv.textContent = `Streamer online: ${onlineCount} / ${streamers.length}`;
+  } catch (err) {
+    console.error(err);
+    counterDiv.textContent = "Errore nel caricamento dei dati";
+  }
 }
 
+// primo caricamento
 getStreams();
+// refresh ogni 60 secondi
+setInterval(getStreams, 60000);
