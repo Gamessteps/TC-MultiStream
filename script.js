@@ -1,5 +1,5 @@
-const clientId = "INSERISCI_CLIENT_ID";
-const accessToken = "INSERISCI_ACCESS_TOKEN";
+const clientId = "x5trfksgu2wfv1yya7elikefif3k2j";
+const accessToken = "i4tkiwd29v2jy932092pamap77as7i";
 
 const streamers = [
   { name: "ermixone_", url: "https://www.twitch.tv/ermixone_" },
